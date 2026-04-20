@@ -1,0 +1,188 @@
+{
+  "fleet_size": 20,
+  "healed": 20,
+  "llm_calls": 1,
+  "blackboard_hits": 19,
+  "results": [
+    {
+      "id": 1,
+      "crashed": true,
+      "blackboard_hit": false,
+      "llm_called": true,
+      "ms": 90,
+      "crash_ms": 43,
+      "healed": true
+    },
+    {
+      "id": 2,
+      "crashed": true,
+      "blackboard_hit": true,
+      "llm_called": false,
+      "ms": 98,
+      "crash_ms": 46,
+      "healed": true
+    },
+    {
+      "id": 3,
+      "crashed": true,
+      "blackboard_hit": true,
+      "llm_called": false,
+      "ms": 88,
+      "crash_ms": 43,
+      "healed": true
+    },
+    {
+      "id": 4,
+      "crashed": true,
+      "blackboard_hit": true,
+      "llm_called": false,
+      "ms": 95,
+      "crash_ms": 48,
+      "healed": true
+    },
+    {
+      "id": 5,
+      "crashed": true,
+      "blackboard_hit": true,
+      "llm_called": false,
+      "ms": 94,
+      "crash_ms": 47,
+      "healed": true
+    },
+    {
+      "id": 6,
+      "crashed": true,
+      "blackboard_hit": true,
+      "llm_called": false,
+      "ms": 91,
+      "crash_ms": 41,
+      "healed": true
+    },
+    {
+      "id": 7,
+      "crashed": true,
+      "blackboard_hit": true,
+      "llm_called": false,
+      "ms": 93,
+      "crash_ms": 51,
+      "healed": true
+    },
+    {
+      "id": 8,
+      "crashed": true,
+      "blackboard_hit": true,
+      "llm_called": false,
+      "ms": 105,
+      "crash_ms": 47,
+      "healed": true
+    },
+    {
+      "id": 9,
+      "crashed": true,
+      "blackboard_hit": true,
+      "llm_called": false,
+      "ms": 92,
+      "crash_ms": 46,
+      "healed": true
+    },
+    {
+      "id": 10,
+      "crashed": true,
+      "blackboard_hit": true,
+      "llm_called": false,
+      "ms": 95,
+      "crash_ms": 43,
+      "healed": true
+    },
+    {
+      "id": 11,
+      "crashed": true,
+      "blackboard_hit": true,
+      "llm_called": false,
+      "ms": 85,
+      "crash_ms": 42,
+      "healed": true
+    },
+    {
+      "id": 12,
+      "crashed": true,
+      "blackboard_hit": true,
+      "llm_called": false,
+      "ms": 82,
+      "crash_ms": 42,
+      "healed": true
+    },
+    {
+      "id": 13,
+      "crashed": true,
+      "blackboard_hit": true,
+      "llm_called": false,
+      "ms": 82,
+      "crash_ms": 44,
+      "healed": true
+    },
+    {
+      "id": 14,
+      "crashed": true,
+      "blackboard_hit": true,
+      "llm_called": false,
+      "ms": 77,
+      "crash_ms": 38,
+      "healed": true
+    },
+    {
+      "id": 15,
+      "crashed": true,
+      "blackboard_hit": true,
+      "llm_called": false,
+      "ms": 77,
+      "crash_ms": 38,
+      "healed": true
+    },
+    {
+      "id": 16,
+      "crashed": true,
+      "blackboard_hit": true,
+      "llm_called": false,
+      "ms": 82,
+      "crash_ms": 40,
+      "healed": true
+    },
+    {
+      "id": 17,
+      "crashed": true,
+      "blackboard_hit": true,
+      "llm_called": false,
+      "ms": 81,
+      "crash_ms": 36,
+      "healed": true
+    },
+    {
+      "id": 18,
+      "crashed": true,
+      "blackboard_hit": true,
+      "llm_called": false,
+      "ms": 80,
+      "crash_ms": 39,
+      "healed": true
+    },
+    {
+      "id": 19,
+      "crashed": true,
+      "blackboard_hit": true,
+      "llm_called": false,
+      "ms": 76,
+      "crash_ms": 37,
+      "healed": true
+    },
+    {
+      "id": 20,
+      "crashed": true,
+      "blackboard_hit": true,
+      "llm_called": false,
+      "ms": 85,
+      "crash_ms": 38,
+      "healed": true
+    }
+  ]
+}
