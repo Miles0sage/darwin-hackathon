@@ -1,5 +1,11 @@
 #!/usr/bin/env python3
-"""SentimentTracker Agent — naive version (v1-only)."""
+"""
+SentimentTracker Agent — The "victim" agent for Darwin MVP demo.
+
+Polls a local mock API (JSON files), extracts post text, runs basic
+sentiment analysis, and prints results. Designed to break when the
+API schema changes from v1 to v2.
+"""
 
 import json
 import sys
@@ -15,6 +21,7 @@ def load_config():
 
 
 def fetch_posts(api_version: str) -> list:
+    """Fetch posts from the mock API (local JSON files)."""
     api_path = BASE_DIR / "api" / api_version / "data.json"
     with open(api_path) as f:
         data = json.load(f)
@@ -22,6 +29,7 @@ def fetch_posts(api_version: str) -> list:
 
 
 def analyze_sentiment(text: str) -> str:
+    """Dead-simple keyword sentiment. Real version would use an LLM."""
     positive = {"love", "great", "awesome", "excellent", "amazing", "good", "best"}
     negative = {"terrible", "awful", "bad", "worst", "hate", "horrible", "poor"}
     words = set(text.lower().split())
@@ -36,15 +44,24 @@ def run():
     config = load_config()
     api_version = config["api_version"]
     agent_name = config["agent_name"]
+
     print(f"[{agent_name}] Polling API {api_version}...")
+
     posts = fetch_posts(api_version)
+
     results = []
     for post in posts:
         text = post["text"]
         sentiment = analyze_sentiment(text)
-        results.append({"id": post["id"], "text": text, "sentiment": sentiment})
+        results.append({
+            "id": post["id"],
+            "text": text,
+            "sentiment": sentiment,
+        })
+
     for r in results:
         print(f"  #{r['id']} [{r['sentiment']:>8}] {r['text']}")
+
     print(f"[{agent_name}] Processed {len(results)} posts successfully.")
     return results
 

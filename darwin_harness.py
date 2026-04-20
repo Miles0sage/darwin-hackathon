@@ -112,6 +112,99 @@ def restore_api() -> None:
         f.write(content)
 
 
+# ─── Demo state reset (idempotent re-runs) ────────────────────────
+NAIVE_AGENT_TEMPLATE = '''#!/usr/bin/env python3
+"""
+SentimentTracker Agent — The "victim" agent for Darwin MVP demo.
+
+Polls a local mock API (JSON files), extracts post text, runs basic
+sentiment analysis, and prints results. Designed to break when the
+API schema changes from v1 to v2.
+"""
+
+import json
+import sys
+import yaml
+from pathlib import Path
+
+BASE_DIR = Path(__file__).parent
+
+
+def load_config():
+    with open(BASE_DIR / "config.yaml") as f:
+        return yaml.safe_load(f)
+
+
+def fetch_posts(api_version: str) -> list:
+    """Fetch posts from the mock API (local JSON files)."""
+    api_path = BASE_DIR / "api" / api_version / "data.json"
+    with open(api_path) as f:
+        data = json.load(f)
+    return data["posts"]
+
+
+def analyze_sentiment(text: str) -> str:
+    """Dead-simple keyword sentiment. Real version would use an LLM."""
+    positive = {"love", "great", "awesome", "excellent", "amazing", "good", "best"}
+    negative = {"terrible", "awful", "bad", "worst", "hate", "horrible", "poor"}
+    words = set(text.lower().split())
+    if words & positive:
+        return "positive"
+    if words & negative:
+        return "negative"
+    return "neutral"
+
+
+def run():
+    config = load_config()
+    api_version = config["api_version"]
+    agent_name = config["agent_name"]
+
+    print(f"[{agent_name}] Polling API {api_version}...")
+
+    posts = fetch_posts(api_version)
+
+    results = []
+    for post in posts:
+        text = post["text"]
+        sentiment = analyze_sentiment(text)
+        results.append({
+            "id": post["id"],
+            "text": text,
+            "sentiment": sentiment,
+        })
+
+    for r in results:
+        print(f"  #{r['id']} [{r['sentiment']:>8}] {r['text']}")
+
+    print(f"[{agent_name}] Processed {len(results)} posts successfully.")
+    return results
+
+
+if __name__ == "__main__":
+    try:
+        run()
+    except Exception as e:
+        print(f"AGENT FAILURE: {type(e).__name__}: {e}", file=sys.stderr)
+        sys.exit(1)
+'''
+
+NAIVE_CONFIG_TEMPLATE = "api_version: v1\nagent_name: sentiment-tracker-01\npoll_interval: 2\n"
+
+
+def reset_demo_state() -> None:
+    """Restore agent.py + config.yaml + blackboard so demo is idempotent.
+
+    Wiping fixes/ at start is deliberate: the demo narrates "novel failure"
+    in Scene 3, so the blackboard must start empty every run.
+    """
+    AGENT_FILE.write_text(NAIVE_AGENT_TEMPLATE)
+    CONFIG_FILE.write_text(NAIVE_CONFIG_TEMPLATE)
+    if FIXES_DIR.exists():
+        for p in FIXES_DIR.glob("fix-*.json"):
+            p.unlink()
+
+
 # ─── LLM Diagnosis ────────────────────────────────────────────────
 def diagnose_and_fix(source_code: str, stderr: str) -> str | None:
     """Send failure context to Claude for diagnosis + fix diff."""
@@ -202,7 +295,10 @@ def _heuristic_fix(source_code: str, stderr: str) -> str | None:
 def _error_signature(stderr: str) -> str:
     """Extract a stable signature from agent stderr for blackboard matching."""
     match = re.search(r"([A-Za-z_]+Error: [^\n]+)", stderr)
-    return match.group(1).strip() if match else stderr.strip().splitlines()[-1]
+    if match:
+        return match.group(1).strip()
+    lines = stderr.strip().splitlines()
+    return lines[-1] if lines else "unknown_failure"
 
 
 def blackboard_lookup(stderr: str) -> dict | None:
@@ -241,6 +337,9 @@ def log_fix_pattern(error_sig: str, root_cause: str, fix_applied: bool, fix_code
 
 # ─── Main demo flow ───────────────────────────────────────────────
 def run_demo() -> bool:
+    # Idempotent re-runs: reset any mutations from prior demo runs
+    reset_demo_state()
+
     banner("DARWIN ENGINE — live demo", C.MAGENTA)
     print(f"  {C.BOLD}Problem:{C.RESET} Claude Code agents keep hitting the same tool failures.")
     print(f"  {C.BOLD}Claim:{C.RESET}   They shouldn't have to. First agent learns, whole fleet benefits.")

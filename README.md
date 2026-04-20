@@ -40,12 +40,12 @@ Raw numbers in [`benchmark-report.json`](./benchmark-report.json).
 ```bash
 git clone https://github.com/Miles0sage/darwin-hackathon
 cd darwin-hackathon
-pip install anthropic pyyaml
+pip install -r requirements.txt
 python3 darwin_harness.py              # 5-scene narrated demo
 python3 benchmark.py --fleet-size 10   # your own numbers
 ```
 
-Requires Python 3.10+. Opus 4.7 API key optional — harness falls back to a deterministic heuristic pattern-matcher so the loop still runs offline.
+Requires Python 3.10+. Opus 4.7 API key optional — harness falls back to a deterministic heuristic pattern-matcher so the loop still runs offline. Demo is idempotent: re-running `darwin_harness.py` resets state automatically.
 
 ## How it works
 
