@@ -4,10 +4,16 @@
 **Team** Solo — Miles (Germany)
 **Status** Building.
 
-## Live demo (60s, runs today)
-▶ **https://asciinema.org/a/ZIN3d4vrZLgWvPCx**
+## Live demo (narrated, ~90s)
+▶ **https://asciinema.org/a/9iuZa5REft7Ieamw**
 
-Watch: agent runs → API breaks → agent crashes → Darwin diagnoses + patches → agent resurrected → fix logged for fleet. Zero human input.
+4 scenes, zero human input:
+1. Baseline — agent polls API v1, works fine
+2. Real-world failure — upstream ships API v2, agent crashes with `KeyError`
+3. Darwin diagnoses — captures failure context, checks fleet blackboard, generates patch
+4. Self-verify → apply → broadcast — agent resurrected, fix pattern saved for fleet
+
+This is the single-agent happy path. Hackathon week productionizes it into a fleet of N parallel Claude Code sessions sharing the blackboard.
 
 ---
 
