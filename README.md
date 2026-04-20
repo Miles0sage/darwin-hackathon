@@ -2,7 +2,12 @@
 
 **Submission for** Cerebral Valley x Anthropic "Built with Opus 4.7" hackathon (Apr 21–27, 2026)
 **Team** Solo — Miles (Germany)
-**Status** Applied, building.
+**Status** Building.
+
+## Live demo (60s, runs today)
+▶ **https://asciinema.org/a/ZIN3d4vrZLgWvPCx**
+
+Watch: agent runs → API breaks → agent crashes → Darwin diagnoses + patches → agent resurrected → fix logged for fleet. Zero human input.
 
 ---
 
