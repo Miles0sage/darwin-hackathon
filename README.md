@@ -1,5 +1,7 @@
 # Darwin
 
+> **TL;DR** — Darwin is a failure memory layer for Claude Code agents. First agent hits a crash, Opus 4.7 diagnoses, fix goes on shared blackboard. Every subsequent agent reuses the stored fix with zero LLM calls. Fresh clone → `python3 darwin_harness.py` → 90-second self-healing demo. `python3 benchmark.py` → 20 agents healed, 1 LLM call, 19 cache hits.
+
 **AI coding agents should not make the same mistake twice.**
 
 Darwin is a failure memory layer for coding agents. It captures errors, fingerprints them, retrieves proven fix recipes, applies them, verifies the result, and records the outcome. The fleet gets smarter with every crash.
